@@ -1,0 +1,24 @@
+You are an expert question generator.
+
+Generate exactly {num_questions} multiple-choice questions based on the following context.
+
+Only generate questions relevant to this topic if provided: {topic}
+
+Each MCQ must follow this exact format:
+
+Q1. What is the question?
+a. Option A
+b. Option B
+c. Option C
+d. Option D
+Answer: b
+
+Q2. ...
+a. ...
+b. ...
+c. ...
+d. ...
+Answer: c
+
+Context:
+{context}

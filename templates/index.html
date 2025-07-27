@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFQuizzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PDFQuizzer</h1>
+            <p>Transform your PDFs into interactive multiple-choice questions using AI</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2 class="form-title">Generate MCQs from PDF</h2>
+                <form method="post" enctype="multipart/form-data" id="mcqForm">
+                    <div class="form-group">
+                        <label for="pdf_file">Upload PDF Document</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+                            <label for="pdf_file" class="file-input-label">
+                                📄 Choose PDF File
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="num_questions">Number of Questions</label>
+                        <input type="number" name="num_questions" id="num_questions" min="1" max="50" value="5"
+                            class="form-input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="topic">Topic (Optional)</label>
+                        <input type="text" name="topic" id="topic"
+                            placeholder="e.g., Photosynthesis, Machine Learning, History" class="form-input">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Generate MCQs</button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Generating MCQs... Please wait</p>
+                </div>
+            </div>
+
+            {% if mcqs %}
+            <div class="mcq-section">
+                <h2 class="mcq-title">Generated MCQs</h2>
+                <div id="mcqs">
+                    {% set inside_question = False %}
+                    {% for line in mcqs.split('\n') %}
+                    {% if line.strip().startswith(("Q", "1.")) %}
+                    {% if inside_question %}</div>{% endif %}
+                <div class="question-block">
+                    <p><strong>{{ line }}</strong></p>
+                    {% set inside_question = True %}
+                    {% elif line.strip().startswith(("a.", "b.", "c.", "d.")) %}
+                    <p>{{ line }}</p>
+                    {% elif "Answer:" in line %}
+                    <button class="answer-button"
+                        onclick="this.nextElementSibling.style.display='block'; this.style.display='none';">Show
+                        Answer</button>
+                    <div class="answer-box"><strong>{{ line }}</strong></div>
+                    {% set inside_question = False %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>&copy; 2025 MCQ Generator. Built with 🤍 using LangChain and AI.</p>
+        </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
