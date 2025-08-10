@@ -155,7 +155,6 @@ body {
     transform: translateY(0);
 }
 
-/* MCQ Section */
 .mcq-section {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
