@@ -24,5 +24,5 @@ def generate_mcqs(summary_text, num_questions, topic=None):
         "num_questions": num_questions,
         "topic": topic or ""
     })
-
+    
     return result  
