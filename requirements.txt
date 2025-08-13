@@ -6,3 +6,4 @@ langchain-community==0.3.26
 langchain-core==0.3.66
 langchain-groq==0.3.4
 gunicorn==23.0.0
+transformers==4.53.0
